@@ -21,8 +21,6 @@ Visualización →  ffmpeg + chafa (portadas en terminal)
 
 Fuentes p2p: torrents y Soulseek vía Nicotine+.
 
----
-
 ### 2. Organizar la biblioteca
 
 [**beets**](https://github.com/beetbox/beets) es impresionante, se encarga de todo lo relacionado a metadata y estructura:
@@ -32,8 +30,6 @@ Fuentes p2p: torrents y Soulseek vía Nicotine+.
 - Base de datos local con stats, búsquedas, plugins
 
 Plugins recomendados: `fetchart`, `embedart`, `musicbrainz`
-
----
 
 ### 3. Reproducción local — `bashmpc.sh`
 
@@ -53,8 +49,6 @@ play --shuffle
 
 Por default muestra portada del álbum (extraída con ffmpeg, renderizada con chafa) y metadata completa. Con `--minimal` muestra solo la línea `♫ Artista - Título [Album]`.
 
----
-
 ### 4. Reproducción online — `bashyt.sh`
 
 [mpv](https://github.com/mpv-player/mpv) + [yt-dlp](https://github.com/yt-dlp/yt-dlp) para reproducir desde YouTube directamente en la terminal, sin browser, sin interfaz gráfica.
@@ -64,8 +58,6 @@ yt --playlist "white groove"
 yt --url "https://youtube.com/watch?v=..."
 yt --search "jaco pastorius portrait of tracy"
 ```
-
----
 
 ### 5. Playlists — `spot-to-yt.py`
 
