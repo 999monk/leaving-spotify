@@ -1,5 +1,5 @@
 
-Un ecosistema personal y minimalista para abandonar Spotify, construido sobre herramientas P2P y open source. Sin suscripciones, sin algoritmos, sin datos enviados a ningún lado. Un intento por construir una biblioteca personal, organizada a gusto y extensible con scripts propios. Cada pieza del stack es reemplazable, auditaable y opcional.
+Un ecosistema personal y minimalista para abandonar Spotify, construido sobre herramientas P2P y open source. Sin suscripciones, sin algoritmos, sin datos enviados a ningún lado. Un intento por construir una biblioteca personal, organizada a gusto y extensible con scripts propios. Cada pieza del stack es reemplazable, auditable y opcional.
 
 ---
 
@@ -19,7 +19,7 @@ Visualización →  ffmpeg + chafa (portadas en terminal)
 
 ### 1. Descargar música
 
-Fuentes p2p: torrents y Soulseek vía Nicotine+.
+Fuentes p2p: torrents y [Soulseek vía Nicotine+](https://nicotine-plus.org/).
 
 ### 2. Organizar la biblioteca
 
@@ -73,6 +73,7 @@ python spotify_to_youtube.py --csv mi_playlist.csv --name "Mi Playlist"
 
 ```
 mpd mpc
+mpv
 ffmpeg ffprobe
 chafa
 yt-dlp
