@@ -119,7 +119,6 @@ cleanup() {
     [ -n "$OLD_STTY" ] && stty "$OLD_STTY"
     mpc stop >/dev/null 2>&1
     echo ""
-    echo -e "${BROWN}WP GL <3${RESET}"
     exit 0
 }
 
@@ -194,10 +193,13 @@ if [ $# -lt 1 ]; then
 fi
 
 MINIMAL=0
+FULL=0
 ARGS=()
 for arg in "$@"; do
     if [ "$arg" = "--minimal" ] || [ "$arg" = "-m" ]; then
         MINIMAL=1
+    elif [ "$arg" = "--full" ] || [ "$arg" = "-f" ]; then
+        FULL=1
     else
         ARGS+=("$arg")
     fi
@@ -316,4 +318,12 @@ case "$MODE" in
         ;;
 esac
 
-interactive_loop
+if [ "$MINIMAL" -eq 1 ]; then
+    interactive_loop
+elif [ "$FULL" -eq 1 ]; then
+    interactive_loop
+else
+    echo ""
+    echo -e "${BROWN}ἡ μὲν ἐπὶ σώματι γυμναστική, ἡ δ᾿ ἐπὶ ψυχῆι μουσική.${RESET}"
+    echo -e "                                             ${BROWN}Platón${RESET}"
+fi
