@@ -1,5 +1,5 @@
 
-Un ecosistema personal y minimalista para abandonar Spotify, construido sobre herramientas P2P y open source. Sin suscripciones, sin algoritmos, sin datos enviados a ningún lado. Un intento por construir una biblioteca personal, organizada a gusto y extensible con scripts propios. Cada pieza del stack es reemplazable, auditable y opcional.
+Un ecosistema personal y minimalista para abandonar Spotify, construido sobre herramientas P2P y open source. Sin suscripciones, sin algoritmos, sin telemetría. Un intento por construir una biblioteca personal, organizada a gusto y extensible con scripts propios. Cada pieza del stack es reemplazable, auditable y opcional.
 
 ---
 
@@ -26,28 +26,47 @@ Fuentes p2p: torrents y [Soulseek vía Nicotine+](https://nicotine-plus.org/).
 [**beets**](https://github.com/beetbox/beets) es impresionante, se encarga de todo lo relacionado a metadata y estructura:
 
 - Renombrado automático con formato homogéneo: `Artista/Album/track.ext`
-- Etiquetado automático via MusicBrainz
+- Etiquetado automático via MusicBrainz y Discogs
 - Base de datos local con stats, búsquedas, plugins
 
-Plugins recomendados: `fetchart`, `embedart`, `musicbrainz`
+Plugins recomendados: `fetchart`, `embedart`, `musicbrainz`, `scrub`, `discogs` 
 
-### 3. Reproducción local — `bashmpc.sh`
+### 3. Reproducción local — `bashmpc.sh`, `bashmpc-fzf.sh`
 
 [**MPD**](https://github.com/MusicPlayerDaemon/MPD) (Music Player Daemon) como backend: un daemon que indexa la biblioteca, mantiene estado y expone un socket. Cualquier cliente puede controlarlo.
 
 **mpc** como cliente CLI: un comando por operación, perfecto para scripting.
 
-`bashmpc.sh` es un wrapper de bash sobre mpc con controles interactivos:
+`bashmpc.sh` es un cli de bash sobre mpc con flags:
 
 ```bash
 play --artist "steely dan"
-play --album "royal scam"
+play --album "the royal scam"
 play --song "deacon blues"
 play --genre "jazz rock"
 play --shuffle
 ```
 
-Por default muestra portada del álbum (extraída con ffmpeg, renderizada con chafa) y metadata completa. Con `--minimal` muestra solo la línea `♫ Artista - Título [Album]`.
+Con `--minimal` se muestra línea `♫ Artista - Título [Album]` en consola.
+
+`view-cover.sh` muestra portada del álbum (extraída con ffmpeg, renderizada con chafa) y metadata completa. 
+
+`bashmpc-fzf.sh` versión alternativa para navegación visual e interactiva con fzf.
+
+### 3.1 Controles y visualización desde polybar
+
+En `~/.config/polybar/config.ini`:
+```
+[module/mpd]
+type = custom/script
+exec = ~/.config/polybar/scripts/mpd-status.sh
+tail = true
+click-left = mpc toggle
+click-right = mpc next
+scroll-up = mpc volume +5
+scroll-down = mpc volume -5
+label-maxlen = 60
+```
 
 ### 4. Reproducción online — `bashyt.sh`
 
@@ -74,6 +93,7 @@ python spotify_to_youtube.py --csv mi_playlist.csv --name "Mi Playlist"
 ```
 mpd mpc
 mpv
+fzf
 ffmpeg ffprobe
 chafa
 yt-dlp
