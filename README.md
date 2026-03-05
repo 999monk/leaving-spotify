@@ -10,6 +10,7 @@ Descarga      →  torrents / soulseek (nicotine+)
 Organización  →  beets
 Reproducción  →  mpd + mpc (local) / mpv + yt-dlp (online)
 Playlists     →  exportify + script python → YouTube
+Recomendación →  script python
 Visualización →  ffmpeg + chafa (portadas en terminal)
 ```
 
@@ -84,6 +85,21 @@ yt --search "jaco pastorius portrait of tracy"
 
 ```bash
 python spotify_to_youtube.py --csv mi_playlist.csv --name "Mi Playlist"
+```
+
+### 5. Recomendación — `get-reco.py`
+
+`get-reco.py`: recomendaciones musicales via Last.fm filtradas contra la biblioteca de beets.
+
+Uso:
+```bash
+    python get-reco.py --genre "jazz fusion"
+    python get-reco.py --genre "funk" --year 1970
+    python get-reco.py --similar "steely dan"
+    python get-reco.py --from-library
+    python get-reco.py --from-library --genre "soul"
+    python get-reco.py --genre "jazz fusion" --rare
+    python get-reco.py --similar "steely dan" --rare --rare-threshold 20000
 ```
 
 ---
