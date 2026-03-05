@@ -87,7 +87,7 @@ yt --search "jaco pastorius portrait of tracy"
 python spotify_to_youtube.py --csv mi_playlist.csv --name "Mi Playlist"
 ```
 
-### 5. Recomendación — `get-reco.py`
+### 6. Recomendación — `get-reco.py`
 
 `get-reco.py`: recomendaciones musicales via Last.fm filtradas contra la biblioteca de beets.
 
