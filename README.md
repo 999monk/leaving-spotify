@@ -106,6 +106,14 @@ Uso:
 
 ## Dependencias
 
+`install-dependecies.sh`: Instala dependencias del proyecto según la selección del usuario.
+
+- Detecta automáticamente pacman/apt; si no funciona, selecciona manualmente.
+- Muestra todas las dependencias del proyecto agrupadas por tipo (pkg/pip).
+- Muestra el estado de instalación de cada dependencia.
+- Permite la instalación selectiva por número, todas las dependencias o solo las del sistema.
+- Compatible con Arch/CachyOS y Debian/Ubuntu (por ahora).
+
 ```
 mpd mpc
 mpv
