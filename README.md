@@ -1,12 +1,12 @@
 
-Un ecosistema personal y minimalista para abandonar Spotify, construido sobre herramientas P2P y open source. Sin suscripciones, sin algoritmos, sin telemetría. Un intento por construir una biblioteca personal, organizada a gusto y extensible con scripts propios. Cada pieza del stack es reemplazable, auditable y opcional.
+Un ecosistema personal y minimalista construido sobre herramientas P2P y open source. Sin suscripciones, sin algoritmos, sin telemetría. Un intento por construir una biblioteca personal, organizada a gusto y extensible con scripts propios. Cada pieza del stack es reemplazable, auditable y opcional.
 
 ---
 
 ## Stack
 
 ```
-Descarga      →  torrents / soulseek (nicotine+)
+Descarga      →  torrents / sldl, soulseek (nicotine+)
 Organización  →  beets
 Reproducción  →  mpd + mpc (local) / mpv + yt-dlp (online)
 Playlists     →  exportify + script python → YouTube
@@ -20,7 +20,9 @@ Visualización →  ffmpeg + chafa (portadas en terminal)
 
 ### 1. Descargar música
 
-Fuentes p2p: torrents y [Soulseek vía Nicotine+](https://nicotine-plus.org/).
+Fuentes p2p: torrents, [sldl](https://github.com/fiso64/sldl) o [Soulseek vía Nicotine+](https://nicotine-plus.org/).
+
+`download-menu.sh` cli de bash sobre sldl para simplificar y organizar la descarga de albums, playlists o discografías. Requiere sldl en el PATH y su respectiva configuración en `~/.config/sldl/sldl.conf`.
 
 ### 2. Organizar la biblioteca
 
@@ -123,4 +125,5 @@ chafa
 yt-dlp
 python + google-api-python-client google-auth-oauthlib
 beets
+sldl
 ```
