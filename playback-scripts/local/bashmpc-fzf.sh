@@ -3,12 +3,11 @@
 
 set -euo pipefail
 
-#colors
-BEIGE='\033[38;2;199;170;119m'
-GREEN='\033[38;2;152;187;108m'
-BROWN='\033[38;2;134;120;104m'
-GRAY='\033[38;2;140;140;140m'
-RESET='\033[0m'
+BEIGE=''
+GREEN=''
+BROWN=''
+GRAY=''
+RESET=''
 
 MUSIC_DIR=""
 
