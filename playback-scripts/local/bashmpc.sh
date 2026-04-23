@@ -23,10 +23,13 @@ usage() {
     echo ""
     echo -e "${BEIGE}Flags:${RESET}"
     echo -e "  --minimal / -m    muestra solo artista - titulo [album]"
+    echo -e "  --regex  / -r     usa regex para la busqueda"
     echo ""
     echo -e "${BEIGE}Ejemplos:${RESET}"
     echo -e "  $0 --artist \"steely dan\""
     echo -e "  $0 --album \"royal scam\" --minimal"
+    echo -e "  $0 --genre --regex \"metal|rock\""
+    echo -e "  $0 --artist --regex \"Cynic|Jamiroquai\""
     echo -e "  $0 --shuffle"
     echo ""
     echo -e "                           ${BROWN}script by monk999${RESET}"
@@ -194,12 +197,15 @@ fi
 
 MINIMAL=0
 FULL=0
+REGEX=0
 ARGS=()
 for arg in "$@"; do
     if [ "$arg" = "--minimal" ] || [ "$arg" = "-m" ]; then
         MINIMAL=1
     elif [ "$arg" = "--full" ] || [ "$arg" = "-f" ]; then
         FULL=1
+    elif [ "$arg" = "--regex" ] || [ "$arg" = "-r" ]; then
+        REGEX=1
     else
         ARGS+=("$arg")
     fi
@@ -219,30 +225,39 @@ case "$MODE" in
             usage
         fi
 
-        mapfile -t MATCHES < <(mpc list artist | grep -i "$SEARCH_TERM")
+        if [ "$REGEX" -eq 1 ]; then
+            mapfile -t MATCHES < <(mpc list artist | grep -iE "$SEARCH_TERM")
+        else
+            mapfile -t MATCHES < <(mpc list artist | grep -i "$SEARCH_TERM")
+        fi
 
         if [ ${#MATCHES[@]} -eq 0 ]; then
             echo -e "${BEIGE}No se encontro el artista: ${GREEN}$SEARCH_TERM${RESET}"
             exit 1
         fi
 
-        ARTIST="${MATCHES[0]}"
         echo ""
-        echo -e "Playing ${BEIGE}${ARTIST}${RESET} in shuffle"
+        echo -e "Playing ${BEIGE}artists matching: $SEARCH_TERM${RESET} in shuffle"
 
         mpc clear >/dev/null 2>&1
-        mpc search artist "$ARTIST" | mpc add >/dev/null 2>&1
+        for artist in "${MATCHES[@]}"; do
+            mpc search artist "$artist" | mpc add >/dev/null 2>&1
+        done
         mpc shuffle >/dev/null 2>&1
         mpc play >/dev/null 2>&1
         ;;
 
-    --album|-A)
+--album|-A)
         if [ -z "$SEARCH_TERM" ]; then
             echo -e "${BEIGE}Error: --album requiere un termino de busqueda${RESET}"
             usage
         fi
 
-        mapfile -t MATCHES < <(mpc list album | grep -i "$SEARCH_TERM")
+        if [ "$REGEX" -eq 1 ]; then
+            mapfile -t MATCHES < <(mpc list album | grep -iE "$SEARCH_TERM")
+        else
+            mapfile -t MATCHES < <(mpc list album | grep -i "$SEARCH_TERM")
+        fi
 
         if [ ${#MATCHES[@]} -eq 0 ]; then
             echo -e "${BEIGE}No se encontro el album: ${GREEN}$SEARCH_TERM${RESET}"
@@ -251,10 +266,13 @@ case "$MODE" in
 
         ALBUM="${MATCHES[0]}"
         echo ""
-        echo -e "Playing full album: ${BEIGE}${ALBUM}${RESET}"
+        echo -e "Playing ${BEIGE}albums matching: $SEARCH_TERM${RESET}"
 
         mpc clear >/dev/null 2>&1
-        mpc search album "$ALBUM" | mpc add >/dev/null 2>&1
+        for album in "${MATCHES[@]}"; do
+            mpc search album "$album" | mpc add >/dev/null 2>&1
+        done
+        mpc shuffle >/dev/null 2>&1
         mpc play >/dev/null 2>&1
         ;;
 
@@ -264,7 +282,11 @@ case "$MODE" in
             usage
         fi
 
-        mapfile -t MATCHES < <(mpc search title "$SEARCH_TERM")
+        if [ "$REGEX" -eq 1 ]; then
+            mapfile -t MATCHES < <(mpc list title | grep -iE "$SEARCH_TERM")
+        else
+            mapfile -t MATCHES < <(mpc list title | grep -i "$SEARCH_TERM")
+        fi
 
         if [ ${#MATCHES[@]} -eq 0 ]; then
             echo -e "${BEIGE}No se encontro la cancion: ${GREEN}$SEARCH_TERM${RESET}"
@@ -272,10 +294,13 @@ case "$MODE" in
         fi
 
         echo ""
-        echo -e "Playing..."
+        echo -e "Playing ${BEIGE}songs matching: $SEARCH_TERM${RESET} in shuffle"
 
         mpc clear >/dev/null 2>&1
-        mpc search title "$SEARCH_TERM" | head -1 | mpc add >/dev/null 2>&1
+        for song in "${MATCHES[@]}"; do
+            mpc search title "$song" | mpc add >/dev/null 2>&1
+        done
+        mpc shuffle >/dev/null 2>&1
         mpc play >/dev/null 2>&1
         ;;
 
@@ -296,19 +321,24 @@ case "$MODE" in
             usage
         fi
 
-        mapfile -t MATCHES < <(mpc list genre | grep -i "$SEARCH_TERM")
+        if [ "$REGEX" -eq 1 ]; then
+            mapfile -t MATCHES < <(mpc list genre | grep -iE "$SEARCH_TERM")
+        else
+            mapfile -t MATCHES < <(mpc list genre | grep -i "$SEARCH_TERM")
+        fi
 
         if [ ${#MATCHES[@]} -eq 0 ]; then
             echo -e "${BEIGE}No se encontro el genero: ${GREEN}$SEARCH_TERM${RESET}"
             exit 1
         fi
 
-        GENRE="${MATCHES[0]}"
         echo ""
-        echo -e "Playing a random ${BEIGE}${GENRE}${RESET} selection"
+        echo -e "Playing ${BEIGE}genres matching: $SEARCH_TERM${RESET} in shuffle"
 
         mpc clear >/dev/null 2>&1
-        mpc search genre "$GENRE" | mpc add >/dev/null 2>&1
+        for genre in "${MATCHES[@]}"; do
+            mpc search genre "$genre" | mpc add >/dev/null 2>&1
+        done
         mpc shuffle >/dev/null 2>&1
         mpc play >/dev/null 2>&1
         ;;
